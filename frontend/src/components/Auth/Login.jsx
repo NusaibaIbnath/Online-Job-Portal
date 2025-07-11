@@ -18,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/user/login",
+        "http://localhost:5001/api/v1/user/login",
         { email, password, role },
         {
           headers: {
@@ -36,6 +36,31 @@ const Login = () => {
       toast.error(error.response.data.message);
     }
   };
+//   const handleLogin = async (e) => {
+//   e.preventDefault();
+//   try {
+//     const { data } = await axios.post(
+//       "http://localhost:5001/api/v1/user/login",
+//       { email, password, role },
+//       {
+//         headers: { "Content-Type": "application/json" },
+//         withCredentials: true,
+//       }
+//     );
+//     toast.success(data.message);
+//     setEmail("");
+//     setPassword("");
+//     setRole("");
+//     setIsAuthorized(true);
+//   } catch (error) {
+//     if (error.response && error.response.data && error.response.data.message) {
+//       toast.error(error.response.data.message);
+//     } else {
+//       toast.error(error.message || "Something went wrong");
+//     }
+//   }
+// };
+
 
   if(isAuthorized){
     return <Navigate to={'/'}/>
@@ -55,7 +80,7 @@ const Login = () => {
               <div>
                 <select value={role} onChange={(e) => setRole(e.target.value)}>
                   <option value="">Select Role</option>
-                  <option value="Employer">Employer</option>
+                  <option value="Employer">Admin</option>
                   <option value="Job Seeker">Job Seeker</option>
                 </select>
                 <FaRegUser />
@@ -66,7 +91,7 @@ const Login = () => {
               <div>
                 <input
                   type="email"
-                  placeholder="zk@gmail.com"
+                  placeholder="xyz@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />

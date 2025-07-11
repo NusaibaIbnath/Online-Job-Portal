@@ -22,7 +22,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/user/register",
+        "http://localhost:5001/api/v1/user/register",
         { name, phone, email, role, password },
         {
           headers: {
@@ -39,7 +39,10 @@ const Register = () => {
       setRole("");
       setIsAuthorized(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.log(error); // Log full error for debugging
+      const message =
+        error?.response?.data?.message || "Registration failed. Please try again.";
+      toast.error(message);
     }
   };
 
@@ -62,7 +65,7 @@ const Register = () => {
               <div>
                 <select value={role} onChange={(e) => setRole(e.target.value)}>
                   <option value="">Select Role</option>
-                  <option value="Employer">Employer</option>
+                  <option value="Employer">Admin</option>
                   <option value="Job Seeker">Job Seeker</option>
                 </select>
                 <FaRegUser />

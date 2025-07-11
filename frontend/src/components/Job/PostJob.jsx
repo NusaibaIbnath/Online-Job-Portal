@@ -21,17 +21,17 @@ const PostJob = () => {
     e.preventDefault();
     if (salaryType === "Fixed Salary") {
       setSalaryFrom("");
-      setSalaryFrom("");
+      // setSalaryFrom("");
     } else if (salaryType === "Ranged Salary") {
       setFixedSalary("");
     } else {
       setSalaryFrom("");
-      setSalaryTo("");
+      // setSalaryTo("");
       setFixedSalary("");
     }
     await axios
       .post(
-        "http://localhost:4000/api/v1/job/post",
+        "http://localhost:5001/api/v1/job/post",
         fixedSalary.length >= 4
           ? {
               title,
@@ -63,8 +63,14 @@ const PostJob = () => {
         toast.success(res.data.message);
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        if (err.response && err.response.data && err.response.data.message) {
+          toast.error(err.response.data.message);
+        } else {
+          toast.error("Server error. Please try again.");
+          console.error("Job post error:", err);
+        }
       });
+
   };
 
   const navigateTo = useNavigate();
